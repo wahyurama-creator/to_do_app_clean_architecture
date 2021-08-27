@@ -59,7 +59,8 @@ dependencies {
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
 
     // Lifecycle Component
-    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifeCycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifeCycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifeCycleVersion"
     implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.lifeCycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifeCycleVersion"
 

@@ -5,24 +5,36 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.dev.to_doappcleanarchitecture.R
+import com.dev.to_doappcleanarchitecture.databinding.FragmentListBinding
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class ListFragment : Fragment() {
+
+    private lateinit var binding: FragmentListBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(
-            R.layout.fragment_list,
+        binding = FragmentListBinding.inflate(
+            inflater,
             container,
             false
         )
+        return binding.root
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.floatingActionButton.setOnClickListener {
+            findNavController().navigate(R.id.action_listFragment_to_addFragment)
+        }
     }
 }
