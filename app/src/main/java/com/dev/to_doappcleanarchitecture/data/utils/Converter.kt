@@ -1,7 +1,6 @@
 package com.dev.to_doappcleanarchitecture.data.utils
 
 import androidx.room.TypeConverter
-import com.dev.to_doappcleanarchitecture.data.Priority
 
 class Converter {
     @TypeConverter

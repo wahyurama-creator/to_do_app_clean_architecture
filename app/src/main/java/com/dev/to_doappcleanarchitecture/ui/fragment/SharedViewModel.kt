@@ -7,12 +7,21 @@ import android.widget.AdapterView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import com.dev.to_doappcleanarchitecture.R
-import com.dev.to_doappcleanarchitecture.data.Priority
+import com.dev.to_doappcleanarchitecture.data.entity.ToDoData
+import com.dev.to_doappcleanarchitecture.data.utils.Priority
 import com.dev.to_doappcleanarchitecture.ui.fragment.add.AddFragment
 
 class SharedViewModel(application: Application) :
     AndroidViewModel(application) {
+
+    val emptyData: MutableLiveData<Boolean> = MutableLiveData(true)
+
+    fun checkDatabaseEmpty(toDoData: List<ToDoData>) {
+        emptyData.value = toDoData.isEmpty()
+    }
+
     fun validateData(
         title: String,
         description: String
@@ -70,9 +79,9 @@ class SharedViewModel(application: Application) :
                 }
             }
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
 
         }
+
+
 }

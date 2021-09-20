@@ -61,7 +61,8 @@ class AddFragment : Fragment() {
         val mTitle = binding.etName.text.toString()
         val mPriority =
             binding.spinnerPriorities.selectedItem.toString()
-        val mDescription = binding.etDescription.text.toString()
+        val mDescription =
+            binding.currentEtDescription.text.toString()
 
         val validation =
             sharedViewModel.validateData(mTitle, mDescription)
