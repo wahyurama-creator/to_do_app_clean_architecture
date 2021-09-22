@@ -2,13 +2,15 @@ package com.dev.to_doappcleanarchitecture.ui.fragment.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dev.to_doappcleanarchitecture.data.entity.ToDoData
 import com.dev.to_doappcleanarchitecture.databinding.RowLayoutBinding
+import com.dev.to_doappcleanarchitecture.ui.fragment.list.adapter.ToDoDiffUtil
 
 class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
-    private var dataList = emptyList<ToDoData>()
+    var dataList = emptyList<ToDoData>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -48,8 +50,10 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
     }
 
     fun setData(todoData: List<ToDoData>) {
+        val toDoDiffUtil = ToDoDiffUtil(dataList, todoData)
+        val toDoDiffResult = DiffUtil.calculateDiff(toDoDiffUtil)
         this.dataList = todoData
-        notifyDataSetChanged()
+        toDoDiffResult.dispatchUpdatesTo(this)
     }
 
 }

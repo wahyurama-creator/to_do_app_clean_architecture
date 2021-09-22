@@ -16,7 +16,7 @@ import com.dev.to_doappcleanarchitecture.ui.fragment.add.AddFragment
 class SharedViewModel(application: Application) :
     AndroidViewModel(application) {
 
-    val emptyData: MutableLiveData<Boolean> = MutableLiveData(true)
+    val emptyData: MutableLiveData<Boolean> = MutableLiveData(false)
 
     fun checkDatabaseEmpty(toDoData: List<ToDoData>) {
         emptyData.value = toDoData.isEmpty()
