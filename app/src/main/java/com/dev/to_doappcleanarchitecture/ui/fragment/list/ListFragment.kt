@@ -18,6 +18,7 @@ import com.dev.to_doappcleanarchitecture.ui.fragment.SharedViewModel
 import com.dev.to_doappcleanarchitecture.ui.fragment.list.adapter.SwipeToDelete
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
 import com.google.android.material.snackbar.Snackbar
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 
 
 class ListFragment : Fragment() {
@@ -55,6 +56,9 @@ class ListFragment : Fragment() {
         binding.recyclerView.apply {
             adapter = listAdapter
             layoutManager = LinearLayoutManager(requireContext())
+            itemAnimator = SlideInUpAnimator().apply {
+                addDuration = 300
+            }
 
             swipeToDelete(this)
         }
