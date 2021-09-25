@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -11,17 +12,17 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dev.to_doappcleanarchitecture.R
-import com.dev.to_doappcleanarchitecture.data.ToDoViewModel
 import com.dev.to_doappcleanarchitecture.data.entity.ToDoData
 import com.dev.to_doappcleanarchitecture.databinding.FragmentListBinding
-import com.dev.to_doappcleanarchitecture.ui.fragment.SharedViewModel
 import com.dev.to_doappcleanarchitecture.ui.fragment.list.adapter.SwipeToDelete
+import com.dev.to_doappcleanarchitecture.ui.viewmodel.SharedViewModel
+import com.dev.to_doappcleanarchitecture.ui.viewmodel.ToDoViewModel
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
 import com.google.android.material.snackbar.Snackbar
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 
 
-class ListFragment : Fragment() {
+class ListFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private lateinit var binding: FragmentListBinding
     private val listAdapter: ListAdapter by lazy { ListAdapter() }
@@ -78,11 +79,28 @@ class ListFragment : Fragment() {
         inflater: MenuInflater
     ) {
         inflater.inflate(R.menu.list_fragment_menu, menu)
+
+        val search = menu.findItem(R.id.menu_search)
+        val searchView = search.actionView as SearchView
+        searchView.isSubmitButtonEnabled = true
+        searchView.setOnQueryTextListener(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_delete_all -> deleteAllData()
+            R.id.menu_priority_high -> {
+                mToDoViewModel.sortByHighPriority.observe(
+                    this,
+                    { listData ->
+                        listAdapter.setData(listData)
+                    })
+            }
+            R.id.menu_priority_low -> {
+                mToDoViewModel.sortByLowPriority.observe(this, {
+                    listAdapter.setData(it)
+                })
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -137,5 +155,31 @@ class ListFragment : Fragment() {
                     listAdapter.notifyItemChanged(position)
                 }
                 .show()
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if (query != null) {
+            searchThroughDatabase(query)
+        }
+        return true
+    }
+
+    private fun searchThroughDatabase(query: String) {
+        var searchQuery = query
+        searchQuery = "%$searchQuery%"
+
+        mToDoViewModel.searchData(searchQuery)
+            .observe(this, { listData ->
+                listData?.let {
+                    listAdapter.setData(it)
+                }
+            })
+    }
+
+    override fun onQueryTextChange(query: String?): Boolean {
+        if (query != null) {
+            searchThroughDatabase(query)
+        }
+        return true
     }
 }

@@ -1,4 +1,4 @@
-package com.dev.to_doappcleanarchitecture.ui.fragment
+package com.dev.to_doappcleanarchitecture.ui.viewmodel
 
 import android.app.Application
 import android.text.TextUtils

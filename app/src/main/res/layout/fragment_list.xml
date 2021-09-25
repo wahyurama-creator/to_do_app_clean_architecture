@@ -7,7 +7,7 @@
 
         <variable
             name="mSharedViewModel"
-            type="com.dev.to_doappcleanarchitecture.ui.fragment.SharedViewModel" />
+            type="com.dev.to_doappcleanarchitecture.ui.viewmodel.SharedViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

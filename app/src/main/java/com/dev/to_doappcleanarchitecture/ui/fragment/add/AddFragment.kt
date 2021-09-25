@@ -7,10 +7,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.dev.to_doappcleanarchitecture.R
-import com.dev.to_doappcleanarchitecture.data.ToDoViewModel
 import com.dev.to_doappcleanarchitecture.data.entity.ToDoData
 import com.dev.to_doappcleanarchitecture.databinding.FragmentAddBinding
-import com.dev.to_doappcleanarchitecture.ui.fragment.SharedViewModel
+import com.dev.to_doappcleanarchitecture.ui.viewmodel.SharedViewModel
+import com.dev.to_doappcleanarchitecture.ui.viewmodel.ToDoViewModel
 
 class AddFragment : Fragment() {
 

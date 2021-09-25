@@ -9,10 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dev.to_doappcleanarchitecture.R
-import com.dev.to_doappcleanarchitecture.data.ToDoViewModel
 import com.dev.to_doappcleanarchitecture.data.entity.ToDoData
 import com.dev.to_doappcleanarchitecture.databinding.FragmentUpdateBinding
-import com.dev.to_doappcleanarchitecture.ui.fragment.SharedViewModel
+import com.dev.to_doappcleanarchitecture.ui.viewmodel.SharedViewModel
+import com.dev.to_doappcleanarchitecture.ui.viewmodel.ToDoViewModel
 
 class UpdateFragment : Fragment() {
 

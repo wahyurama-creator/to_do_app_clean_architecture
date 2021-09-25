@@ -1,4 +1,4 @@
-package com.dev.to_doappcleanarchitecture.data
+package com.dev.to_doappcleanarchitecture.ui.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -15,8 +15,14 @@ class ToDoViewModel(application: Application) :
     private val toDoDao =
         ToDoDatabase.getInstance(application).toDoDao()
     private val repository: ToDoRepository = ToDoRepository(toDoDao)
+
     val getAllData: LiveData<List<ToDoData>> =
         repository.getAllData
+
+    val sortByHighPriority: LiveData<List<ToDoData>> =
+        repository.sortByHighPriority
+    val sortByLowPriority: LiveData<List<ToDoData>> =
+        repository.sortByLowPriority
 
     fun insertData(toDoData: ToDoData) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -40,5 +46,9 @@ class ToDoViewModel(application: Application) :
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAllData()
         }
+    }
+
+    fun searchData(query: String): LiveData<List<ToDoData>> {
+        return repository.searchData(query)
     }
 }
