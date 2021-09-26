@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.dev.to_doappcleanarchitecture.R
 import com.dev.to_doappcleanarchitecture.data.entity.ToDoData
 import com.dev.to_doappcleanarchitecture.databinding.FragmentListBinding
@@ -56,7 +56,10 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
 
         binding.recyclerView.apply {
             adapter = listAdapter
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = StaggeredGridLayoutManager(
+                2,
+                StaggeredGridLayoutManager.VERTICAL
+            )
             itemAnimator = SlideInUpAnimator().apply {
                 addDuration = 300
             }
@@ -135,7 +138,6 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
                 restoreDeletedData(
                     viewHolder.itemView,
                     itemToDelete,
-                    viewHolder.adapterPosition
                 )
             }
         }
@@ -146,15 +148,13 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
     private fun restoreDeletedData(
         view: View,
         item: ToDoData,
-        position: Int
     ) {
-        val snackBar =
-            Snackbar.make(view, "Deleted ${item.title}", LENGTH_SHORT)
-                .setAction("Undo") {
-                    mToDoViewModel.insertData(item)
-                    listAdapter.notifyItemChanged(position)
-                }
-                .show()
+
+        Snackbar.make(view, "Deleted ${item.title}", LENGTH_SHORT)
+            .setAction("Undo") {
+                mToDoViewModel.insertData(item)
+            }
+            .show()
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
