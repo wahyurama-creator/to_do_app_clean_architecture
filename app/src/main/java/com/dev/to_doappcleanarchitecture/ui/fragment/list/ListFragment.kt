@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.dev.to_doappcleanarchitecture.R
 import com.dev.to_doappcleanarchitecture.data.entity.ToDoData
+import com.dev.to_doappcleanarchitecture.data.utils.hideKeyboard
+import com.dev.to_doappcleanarchitecture.data.utils.observerOnce
 import com.dev.to_doappcleanarchitecture.databinding.FragmentListBinding
 import com.dev.to_doappcleanarchitecture.ui.fragment.list.adapter.SwipeToDelete
 import com.dev.to_doappcleanarchitecture.ui.viewmodel.SharedViewModel
@@ -75,6 +77,9 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
             })
 
         setHasOptionsMenu(true)
+
+        // Hide soft keyboard
+        hideKeyboard(requireActivity())
     }
 
     override fun onCreateOptionsMenu(
@@ -169,7 +174,7 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
         searchQuery = "%$searchQuery%"
 
         mToDoViewModel.searchData(searchQuery)
-            .observe(this, { listData ->
+            .observerOnce(viewLifecycleOwner, { listData ->
                 listData?.let {
                     listAdapter.setData(it)
                 }
